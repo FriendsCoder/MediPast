@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add_doctor"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Add Doctor" />
+        <item
+            android:id="@+id/nav_add_medical_history"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Add Medical History" />
+        <item
+            android:id="@+id/nav_doctors_info"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Doctors Information" />
+        <item
+            android:id="@+id/nav_medical_history"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Medical History" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
