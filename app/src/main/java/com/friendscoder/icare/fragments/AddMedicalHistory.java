@@ -3,6 +3,7 @@ package com.friendscoder.icare.fragments;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,9 +25,12 @@ import android.widget.Toast;
 
 import com.friendscoder.icare.R;
 import com.friendscoder.icare.dbhelpers.DoctorDbHelper;
+import com.friendscoder.icare.models.MedicalHistory;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -32,11 +38,13 @@ import static android.app.Activity.RESULT_OK;
 public class AddMedicalHistory extends Fragment {
     ImageView ivPrescription;
     Button btnTakePrescription, btnDate, btnSave, btnCancel;
-    EditText etDoctorName, etDetails;
+    EditText  etDetails;
+    AutoCompleteTextView etDoctorName;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String prescriptionPhoto, date;
     private DatePickerDialog datePickerDialog;
     DoctorDbHelper medicalHistoryDb;
+    private ArrayList<String> doctorName;
 
     @Nullable
     @Override
@@ -48,6 +56,16 @@ public class AddMedicalHistory extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initialization(view);
+
+        List<String> doctorName=loadAllDoctorName();
+        String[] arr={""};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getContext(),android.R.layout.select_dialog_item, doctorName);
+
+        etDoctorName.setThreshold(2);
+        etDoctorName.setAdapter(adapter);
+
         btnTakePrescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +142,19 @@ public class AddMedicalHistory extends Fragment {
         btnCancel = view.findViewById(R.id.btn_h_cancel);
         btnSave = view.findViewById(R.id.btn_h_save);
     }
-
+    private List<String> loadAllDoctorName() {
+        ArrayList<String> nameList=new ArrayList<>();
+        medicalHistoryDb = new DoctorDbHelper(getActivity());
+        Cursor cursor = medicalHistoryDb.getMedicalHistory();
+        if (cursor.moveToFirst()) {
+            do {
+               String name = cursor.getString(cursor.getColumnIndex(medicalHistoryDb.KEY_HISTORY_NAME));
+               nameList.add(name);
+               Toast.makeText(getContext(),name,Toast.LENGTH_SHORT).show();
+                medicalHistoryDb.close();
+            } while (cursor.moveToNext());
+        }
+        return nameList;
+    }
 
 }

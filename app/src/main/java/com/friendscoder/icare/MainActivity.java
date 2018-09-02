@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.friendscoder.icare.fragments.AddDoctors;
 import com.friendscoder.icare.fragments.AddMedicalHistory;
@@ -22,6 +23,17 @@ import com.friendscoder.icare.fragments.MedicalHistoryView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
+    FloatingActionButton fabAppointment, fabHistory;
+
+    private boolean flag=true;
+
+    private boolean fabExpanded = false;
+    private FloatingActionButton fabSettings;
+    private LinearLayout layoutFabSave;
+    private LinearLayout layoutFabEdit;
+    private LinearLayout layoutFabPhoto;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +41,54 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Appointment");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        DoctorsInformation doctorsInformation = new DoctorsInformation();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.main_content, doctorsInformation);
+
+        transaction.commit();
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        fabSettings = (FloatingActionButton) this.findViewById(R.id.fabSetting);
+        fabAppointment=findViewById(R.id.fabAppointment);
+        fabHistory=findViewById(R.id.fabHistory);
+
+        layoutFabSave = (LinearLayout) this.findViewById(R.id.layoutFabSave);
+        layoutFabEdit = (LinearLayout) this.findViewById(R.id.layoutFabEdit);
+
+        //layoutFabSettings = (LinearLayout) this.findViewById(R.id.layoutFabSettings);
+
+        //When main Fab (Settings) is clicked, it expands if not expanded already.
+        //Collapses if main FAB was open already.
+        //This gives FAB (Settings) open/close behavior
+        fabSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (fabExpanded == true){
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
             }
         });
 
+        closeSubMenusFab();
+
+        fabAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               addDoctor();
+            }
+        });
+
+        fabHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               addNewMedicalFragmemt();
+            }
+        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -47,6 +97,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        toolbar.setTitle("Appointment");
+
     }
 
     @Override
@@ -56,6 +108,10 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+
+        if (!flag){
+            fabSettings.setVisibility(View.VISIBLE);
         }
     }
 
@@ -88,32 +144,30 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_doctor) {
-            AddDoctors addDoctors = new AddDoctors();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_content, addDoctors);
-            //transaction.addToBackStack("addDoctors");
-            toolbar.setTitle("Add Doctors");
-            transaction.commit();
+           addDoctor();
         } else if (id == R.id.nav_add_medical_history) {
-            AddMedicalHistory addMedicalHistory = new AddMedicalHistory();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_content, addMedicalHistory);
-            //transaction.addToBackStack("addMedicalHistory");
-            toolbar.setTitle("Add Medical History");
-            transaction.commit();
+            addNewMedicalFragmemt();
 
         } else if (id == R.id.nav_doctors_info) {
             DoctorsInformation doctorsInformation = new DoctorsInformation();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_content, doctorsInformation);
-            transaction.addToBackStack("doctorsInformation");
+            flag=false;
+            transaction.addToBackStack("actvityOne");
+            toolbar.setTitle("Appointment");
+            closeSubMenusFab();
+            fabSettings.setVisibility(View.VISIBLE);
+
             transaction.commit();
 
         } else if (id == R.id.nav_medical_history) {
             MedicalHistoryView medicalHistoryView = new MedicalHistoryView();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_content, medicalHistoryView);
-            transaction.addToBackStack("medicalHistoryView");
+            transaction.addToBackStack("actvityOne");
+            closeSubMenusFab();
+            fabSettings.setVisibility(View.VISIBLE);
+
             transaction.commit();
         } else if (id == R.id.nav_share) {
 
@@ -124,5 +178,48 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void closeSubMenusFab(){
+        layoutFabSave.setVisibility(View.INVISIBLE);
+        layoutFabEdit.setVisibility(View.INVISIBLE);
+
+        fabSettings.setImageResource(R.drawable.add);
+        fabExpanded = false;
+    }
+
+    //Opens FAB submenus
+    private void openSubMenusFab(){
+        layoutFabSave.setVisibility(View.VISIBLE);
+        layoutFabEdit.setVisibility(View.VISIBLE);
+
+        //Change settings icon to 'X' icon
+        fabSettings.setImageResource(R.drawable.ic_clear_white_24dp);
+        fabExpanded = true;
+    }
+
+    public void addNewMedicalFragmemt(){
+        AddMedicalHistory addMedicalHistory = new AddMedicalHistory();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_content, addMedicalHistory);
+        transaction.addToBackStack("actvityOne");
+        toolbar.setTitle("Add Medical History");
+        closeSubMenusFab();
+        flag=false;
+        fabSettings.setVisibility(View.GONE);
+
+        transaction.commit();
+    }
+    public void addDoctor(){
+        AddDoctors addDoctors = new AddDoctors();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_content, addDoctors);
+        transaction.addToBackStack("actvityOne");
+        toolbar.setTitle("Add Doctors");
+        flag=false;
+        closeSubMenusFab();
+        fabSettings.setVisibility(View.GONE);
+
+        transaction.commit();
     }
 }

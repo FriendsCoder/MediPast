@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DoctorDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Doctors.db";
     public static final String DOCTORS_TABLE = "doctors_table";
@@ -97,6 +99,13 @@ public class DoctorDbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getMedicalHistory() {
+        db = this.getReadableDatabase();
+        String selectData = "SELECT * FROM " + MEDICAL_HISTORY_TABLE;
+        Cursor cursor = db.rawQuery(selectData, null);
+        return cursor;
+    }
+
+    public Cursor getAllDoctorName(){
         db = this.getReadableDatabase();
         String selectData = "SELECT * FROM " + MEDICAL_HISTORY_TABLE;
         Cursor cursor = db.rawQuery(selectData, null);

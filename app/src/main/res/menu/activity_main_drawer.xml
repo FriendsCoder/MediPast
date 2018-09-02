@@ -5,21 +5,22 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_add_doctor"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Add Doctor" />
-        <item
-            android:id="@+id/nav_add_medical_history"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Add Medical History" />
-        <item
             android:id="@+id/nav_doctors_info"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
             android:title="Doctors Information" />
         <item
             android:id="@+id/nav_medical_history"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
             android:title="Medical History" />
+        <item
+            android:id="@+id/nav_add_doctor"
+            android:icon="@drawable/add"
+            android:title="Add Doctor" />
+        <item
+            android:id="@+id/nav_add_medical_history"
+            android:icon="@drawable/visited"
+            android:title="Add Medical History" />
+
     </group>
 
     <item android:title="Communicate">
