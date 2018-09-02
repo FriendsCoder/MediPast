@@ -1,10 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:id="@+id/t"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Medical History"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d1d2d2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_prescription"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_top"
+        android:scaleType="fitXY"
+        android:src="@drawable/gallery" />
+
+    <Button
+        android:id="@+id/btn_take_prescription"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/camera"
+        android:padding="15dp"
+        android:text="Take Prescription"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/et_h_doctor_name"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:hint="Doctor Name"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/et_h_doctor_details"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:hint="Doctor Details"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_h_date"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:text="Date"
+        android:textAllCaps="false"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_h_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_h_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textSize="25sp" />
+    </LinearLayout>
+
 </LinearLayout>
