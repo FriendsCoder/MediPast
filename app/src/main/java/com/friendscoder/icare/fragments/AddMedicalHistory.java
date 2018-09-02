@@ -115,11 +115,6 @@ public class AddMedicalHistory extends Fragment {
     }
 
 
-    public static Bitmap decodeBase64(String input) {
-        byte[] decodedBytes = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-    }
-
     private void initialization(View view) {
         ivPrescription = view.findViewById(R.id.iv_prescription);
         btnTakePrescription = view.findViewById(R.id.btn_take_prescription);

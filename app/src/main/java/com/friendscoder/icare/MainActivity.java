@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.friendscoder.icare.fragments.AddDoctors;
 import com.friendscoder.icare.fragments.AddMedicalHistory;
 import com.friendscoder.icare.fragments.DoctorsInformation;
+import com.friendscoder.icare.fragments.MedicalHistoryView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,14 +91,15 @@ public class MainActivity extends AppCompatActivity
             AddDoctors addDoctors = new AddDoctors();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_content, addDoctors);
-            transaction.addToBackStack("addDoctors");
+            //transaction.addToBackStack("addDoctors");
             toolbar.setTitle("Add Doctors");
             transaction.commit();
         } else if (id == R.id.nav_add_medical_history) {
             AddMedicalHistory addMedicalHistory = new AddMedicalHistory();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_content, addMedicalHistory);
-            transaction.addToBackStack("addMedicalHistory");
+            //transaction.addToBackStack("addMedicalHistory");
+            toolbar.setTitle("Add Medical History");
             transaction.commit();
 
         } else if (id == R.id.nav_doctors_info) {
@@ -108,7 +110,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.nav_medical_history) {
-
+            MedicalHistoryView medicalHistoryView = new MedicalHistoryView();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_content, medicalHistoryView);
+            transaction.addToBackStack("medicalHistoryView");
+            transaction.commit();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
