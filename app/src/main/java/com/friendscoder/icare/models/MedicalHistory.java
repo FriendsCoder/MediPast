@@ -1,6 +1,8 @@
 package com.friendscoder.icare.models;
 
-public class MedicalHistory {
+import java.io.Serializable;
+
+public class MedicalHistory implements Serializable{
     private int id;
     private String doctorName;
     private String doctorDetails;

@@ -1,5 +1,6 @@
 package com.friendscoder.icare.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +9,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.friendscoder.icare.DetailsMedicalHistory;
 import com.friendscoder.icare.R;
+import com.friendscoder.icare.UpdateDoctorActivity;
 import com.friendscoder.icare.adapters.MedicalHistoryAdapter;
 import com.friendscoder.icare.dbhelpers.DoctorDbHelper;
+import com.friendscoder.icare.models.Doctor;
 import com.friendscoder.icare.models.MedicalHistory;
 
 import java.util.ArrayList;
@@ -37,6 +42,15 @@ public class MedicalHistoryView extends Fragment {
         medicalHistoryList = loadData();
         medicalHistoryAdapter = new MedicalHistoryAdapter(getActivity(), medicalHistoryList);
         medicalHistoryListView.setAdapter(medicalHistoryAdapter);
+        medicalHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MedicalHistory medicalHistory=medicalHistoryList.get(position);
+                Intent intent=new Intent(getActivity(), DetailsMedicalHistory.class);
+                intent.putExtra("medicalHistory",medicalHistory);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private List<MedicalHistory> loadData() {

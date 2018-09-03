@@ -58,7 +58,6 @@ public class DoctorsInformation extends Fragment {
                 dialogEditDelete.show();
 
                 TextView tvEdit = (TextView) dialogEditDelete.findViewById(R.id.tv_dialog_edit);
-                TextView tvDelete = (TextView) dialogEditDelete.findViewById(R.id.tv_dialog_delete);
                 tvEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
