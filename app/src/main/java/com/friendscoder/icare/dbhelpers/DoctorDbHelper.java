@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.friendscoder.icare.models.Doctor;
+
 import java.util.ArrayList;
 
 public class DoctorDbHelper extends SQLiteOpenHelper {
@@ -107,22 +109,27 @@ public class DoctorDbHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDoctorName(){
         db = this.getReadableDatabase();
-        String selectData = "SELECT * FROM " + MEDICAL_HISTORY_TABLE;
+        String selectData = "SELECT "+ KEY_NAME+" " + DOCTORS_TABLE;
         Cursor cursor = db.rawQuery(selectData, null);
+
         return cursor;
     }
 
-    public boolean updateDoctor(String id, String name, String details, String date, String number, String email) {
+    public boolean updateDoctor(Doctor doctor) {
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_ID, id);
-        contentValues.put(KEY_NAME, name);
-        contentValues.put(KEY_DETAILS, details);
-        contentValues.put(KEY_DATE, date);
-        contentValues.put(KEY_NUMBER, number);
-        contentValues.put(KEY_EMAIL, email);
+        contentValues.put(KEY_ID, doctor.getId());
+        contentValues.put(KEY_NAME, doctor.getName());
+        contentValues.put(KEY_DETAILS, doctor.getDetails());
+        contentValues.put(KEY_DATE, doctor.getAppointmentDate());
+        contentValues.put(KEY_NUMBER, doctor.getPhoneNumber());
+        contentValues.put(KEY_EMAIL, doctor.getEmail());
 
-        long updated = db.update(DOCTORS_TABLE, contentValues, "ID = ?", new String[]{id});
+        String whereClues = KEY_ID + "= ?";
+        String [] selectionArgs = {String.valueOf(doctor.getId())};
+
+
+        long updated = db.update(DOCTORS_TABLE, contentValues, whereClues, selectionArgs);
         db.close();
         if (updated > 0) {
             return true;
@@ -131,7 +138,7 @@ public class DoctorDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean updateMedicalHistory(String id, String name, String details, String prescriptionPhoto, String date) {
+    public boolean updateMedicalHistory(int id, String name, String details, String prescriptionPhoto, String date) {
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_HISTORY_NAME, name);
@@ -139,7 +146,10 @@ public class DoctorDbHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_HISTORY_PRESCRIPTION_PHOTO, prescriptionPhoto);
         contentValues.put(KEY_HISTORY_DATE, date);
 
-        long updated = db.update(MEDICAL_HISTORY_TABLE, contentValues, "ID = ?", new String[]{id});
+        String whereClues = KEY_ID + "= ?";
+        String [] selectionArgs = {String.valueOf(id)};
+
+        long updated = db.update(MEDICAL_HISTORY_TABLE, contentValues, whereClues, selectionArgs);
         db.close();
 
         if (updated > 0) {

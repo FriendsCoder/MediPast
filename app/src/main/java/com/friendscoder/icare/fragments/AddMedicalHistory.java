@@ -57,11 +57,11 @@ public class AddMedicalHistory extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initialization(view);
 
-        List<String> doctorName=loadAllDoctorName();
+//        List<String> doctorName=loadAllDoctorName();
         String[] arr={""};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getContext(),android.R.layout.select_dialog_item, doctorName);
+                (getContext(),android.R.layout.select_dialog_item, arr);
 
         etDoctorName.setThreshold(2);
         etDoctorName.setAdapter(adapter);
@@ -142,19 +142,19 @@ public class AddMedicalHistory extends Fragment {
         btnCancel = view.findViewById(R.id.btn_h_cancel);
         btnSave = view.findViewById(R.id.btn_h_save);
     }
-    private List<String> loadAllDoctorName() {
-        ArrayList<String> nameList=new ArrayList<>();
-        medicalHistoryDb = new DoctorDbHelper(getActivity());
-        Cursor cursor = medicalHistoryDb.getMedicalHistory();
-        if (cursor.moveToFirst()) {
-            do {
-               String name = cursor.getString(cursor.getColumnIndex(medicalHistoryDb.KEY_HISTORY_NAME));
-               nameList.add(name);
-               Toast.makeText(getContext(),name,Toast.LENGTH_SHORT).show();
-                medicalHistoryDb.close();
-            } while (cursor.moveToNext());
-        }
-        return nameList;
-    }
+//    private List<String> loadAllDoctorName() {
+//        ArrayList<String> nameList=new ArrayList<>();
+//        medicalHistoryDb = new DoctorDbHelper(getActivity());
+//        Cursor cursor = medicalHistoryDb.getAllDoctorName();
+//        if (cursor.moveToFirst()) {
+//            do {
+//               String name = cursor.getString(cursor.getColumnIndex(medicalHistoryDb.KEY_NAME));
+//               nameList.add(name);
+//               Toast.makeText(getContext(),name,Toast.LENGTH_SHORT).show();
+//                medicalHistoryDb.close();
+//            } while (cursor.moveToNext());
+//        }
+//        return nameList;
+//    }
 
 }

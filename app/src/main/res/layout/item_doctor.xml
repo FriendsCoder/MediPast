@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_top"
     android:background="#e2e2e2"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
         android:id="@+id/tv_name"

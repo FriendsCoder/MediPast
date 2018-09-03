@@ -86,7 +86,7 @@ public class DoctorsInformation extends Fragment {
                 String phoneNumber = cursor.getString(cursor.getColumnIndex(doctorsDb.KEY_NUMBER));
                 String email = cursor.getString(cursor.getColumnIndex(doctorsDb.KEY_EMAIL));
 
-                Doctor doctor = new Doctor(name, details, appointmentDate, phoneNumber, email);
+                Doctor doctor = new Doctor(id,name, details, appointmentDate, phoneNumber, email);
                 doctorsList.add(doctor);
                 doctorsDb.close();
             } while (cursor.moveToNext());
